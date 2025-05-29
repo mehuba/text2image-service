@@ -16,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TaskService {
 
     private final Map<String, TaskStatus> taskStore = new ConcurrentHashMap<>();
-//    private final MasterTaskDispatcher dispatcher = new MasterTaskDispatcher();
     @Autowired
     private StringRedisTemplate redisTemplate;
 
@@ -35,7 +34,6 @@ public class TaskService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to enqueue task", e);
         }
-//        dispatcher.dispatchTask(request, taskId);
         return taskId;
     }
 
