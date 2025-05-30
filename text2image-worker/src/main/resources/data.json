@@ -35,7 +35,7 @@
       "inputs": {
         "width": 768,
         "height": 768,
-        "role_text": "[Taylor] a woman img, wearing a black T-shirt, blue loose hair.\n[Lecun] a man img,wearing a suit,black hair.",
+        "role_text": "[Taylor] a woman img, wearing a yellow T-shirt, blue loose hair.\n[Lecun] a man img,wearing a suit,black hair.",
         "scene_text": "[Taylor] wake up in the bed ;\n[Taylor] have breakfast by the window;\n[Lecun] driving a car;\n[Lecun] is working.",
         "pos_text": ",best",
         "neg_text": "bad anatomy, bad hands, missing fingers, extra fingers,three hands, three legs, bad arms, missing legs, missing arms, poorly drawn face, bad face, fused face, cloned face, three crus, fused feet, fused thigh, extra crus, ugly fingers, horn,amputation, disconnected limbs",

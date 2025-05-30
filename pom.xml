@@ -16,7 +16,6 @@
         <module>text2image-common</module>
         <module>text2image-master</module>
         <module>text2image-worker</module>
-        <module>text2image-queue</module>
     </modules>
 
     <properties>
