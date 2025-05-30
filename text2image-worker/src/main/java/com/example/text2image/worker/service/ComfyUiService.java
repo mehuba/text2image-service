@@ -23,6 +23,10 @@ public class ComfyUiService {
 
     @Value("classpath:data.json")
     private Resource resourceFile;
+    @Value("${master.callback.url:http://localhost:8080/api/v1/tasks/callback}")
+    private String masterCallbackUrl;
+    @Value("${comfy.ui.url:https://mnqbr1rkrmsamm-3000.proxy.runpod.net/api}")
+    private String comfyUiUrl;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final RestTemplate restTemplate = new RestTemplate();
@@ -41,7 +45,6 @@ public class ComfyUiService {
             return response;
         });
     }
-    private final String comfyUiUrl = "https://mnqbr1rkrmsamm-3000.proxy.runpod.net/api";
 
     public TaskStatus executeGeneration(TaskRequest request) {
         TaskStatus status = new TaskStatus();
@@ -66,6 +69,7 @@ public class ComfyUiService {
             if (!imageFile.exists()) {
                 status.setStatus(TaskStatus.Status.FAILED);
                 status.setErrorMessage("Image not found");
+                callbackMaster(status);
                 return status;
             }
 
@@ -79,13 +83,23 @@ public class ComfyUiService {
             // 6. 设置状态完成
             status.setStatus(TaskStatus.Status.SUCCESS);
             status.setImageUrl("/results/" + newName);
+            callbackMaster(status);
             return status;
 
         } catch (Exception e) {
             System.out.println(e);
             status.setStatus(TaskStatus.Status.FAILED);
             status.setErrorMessage(e.getMessage());
+            callbackMaster(status);
             return status;
+        }
+    }
+
+    private void callbackMaster(TaskStatus status) {
+        try {
+            restTemplate.postForEntity(masterCallbackUrl, status, Void.class);
+        } catch (Exception e) {
+            System.err.println("Failed to callback master: " + e.getMessage());
         }
     }
 }

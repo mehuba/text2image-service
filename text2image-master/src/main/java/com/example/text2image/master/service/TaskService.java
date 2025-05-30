@@ -47,4 +47,8 @@ public class TaskService {
             status.setStatus(TaskStatus.Status.CANCELED);
         }
     }
+
+    public void updateTaskStatus(TaskStatus status) {
+        taskStore.put(status.getTaskId(), status);
+    }
 }
