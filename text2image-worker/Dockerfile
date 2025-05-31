@@ -5,9 +5,9 @@ RUN apt update && apt install -y \
     python3 python3-pip openjdk-8-jdk git wget
 
 # 安装 ComfyUI
-WORKDIR /workspace
+WORKDIR /
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git
-WORKDIR /workspace/ComfyUI
+WORKDIR /ComfyUI
 RUN pip install -r requirements.txt
 
 # 拷贝 Java Worker 应用
