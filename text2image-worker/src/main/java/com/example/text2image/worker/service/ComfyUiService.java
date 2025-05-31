@@ -25,7 +25,7 @@ public class ComfyUiService {
     private Resource resourceFile;
     @Value("${master.callback.url:http://localhost:8080/api/v1/tasks/callback}")
     private String masterCallbackUrl;
-    @Value("${comfy.ui.url:https://mnqbr1rkrmsamm-3000.proxy.runpod.net/api}")
+    @Value("${comfy.ui.url:https://localhost:8188/api}")
     private String comfyUiUrl;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
