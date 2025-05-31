@@ -1,10 +1,14 @@
-FROM runpod/stable-diffusion:comfy-ui-6.0.0
+FROM ubuntu:22.04
 
-# 安装 Java
-RUN apt-get update && apt-get install -y openjdk-8-jdk && apt-get clean
+# 安装依赖
+RUN apt update && apt install -y \
+    python3 python3-pip openjdk-8-jdk git wget
 
-# 设置工作目录
-WORKDIR /
+# 安装 ComfyUI
+WORKDIR /workspace
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git
+WORKDIR /workspace/ComfyUI
+RUN pip install -r requirements.txt
 
 # 拷贝 Java Worker 应用
 COPY target/text2image-worker.jar /app/worker.jar
