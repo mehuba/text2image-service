@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 启动 ComfyUI
-cd /ComfyUI || exit
+cd /workspace/ComfyUI || exit
 python3 main.py --listen 0.0.0.0 --port 8188 &
 
 # 等待 ComfyUI 启动
