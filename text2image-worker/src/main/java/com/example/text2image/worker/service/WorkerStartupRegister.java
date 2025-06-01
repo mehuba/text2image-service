@@ -4,16 +4,16 @@ import com.example.text2image.common.dto.WorkerInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Component
 public class WorkerStartupRegister implements ApplicationRunner {
 
-    @Value("${master.register.url}")
-    private String masterRegisterUrl;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -23,15 +23,15 @@ public class WorkerStartupRegister implements ApplicationRunner {
         WorkerInfo info = new WorkerInfo();
         info.setId(UUID.randomUUID().toString()); // 或从配置文件中读取固定ID
         info.setAddress(getComfyUIPublicUrl()); // Worker 的访问地址
-        info.setGpuUsage(0.0);
-        info.setAvailable(true);
+        String masterRegisterUrl = System.getenv("MASTER_URL") + "/api/workers/register";
 
-        try {
-            restTemplate.postForObject(masterRegisterUrl, info, Void.class);
-            System.out.println("✅ Worker registered to master");
-        } catch (Exception e) {
-            System.err.println("❌ Failed to register worker: " + e.getMessage());
-        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // 某些服务器默认拒绝非浏览器类请求, 必须加这个header否则报错403
+        headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+        HttpEntity<WorkerInfo> entity = new HttpEntity<>(info, headers);
+        restTemplate.exchange(masterRegisterUrl, HttpMethod.POST, entity, Void.class);
+        System.out.println("✅ Worker registered to master: " + masterRegisterUrl);
     }
 
     public String getComfyUIPublicUrl() {

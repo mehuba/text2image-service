@@ -19,6 +19,7 @@ public class WorkerController {
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody WorkerInfo info) {
         registry.register(info);
+        System.out.println("Worker registered: " + info);
         return ResponseEntity.ok().build();
     }
 }

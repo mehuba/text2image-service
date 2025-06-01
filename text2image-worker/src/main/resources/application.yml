@@ -18,8 +18,3 @@ management:
 comfy:
   ui:
     url: https://localhost:8188/api
-master:
-  register:
-    url: ${MASTER_URL}/api/workers/register
-  callback:
-    url: ${MASTER_URL}/api/v1/tasks/callback
