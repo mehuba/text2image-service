@@ -17,4 +17,4 @@ management:
 
 comfy:
   ui:
-    url: https://localhost:8188/api
+    url: http://localhost:8188/api
