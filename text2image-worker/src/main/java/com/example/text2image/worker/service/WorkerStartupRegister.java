@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.http.*;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,7 +17,21 @@ public class WorkerStartupRegister implements ApplicationRunner {
 
 
     private final RestTemplate restTemplate = new RestTemplate();
+    {
+        restTemplate.getInterceptors().add((request, body, execution) -> {
+            System.out.println("=== REQUEST HEADERS ===");
+            request.getHeaders().forEach((k, v) -> System.out.println(k + ": " + v));
+            System.out.println("URI: " + request.getURI());
+            System.out.println("Method: " + request.getMethod());
 
+            ClientHttpResponse response = execution.execute(request, body);
+
+            System.out.println("=== RESPONSE HEADERS ===");
+            response.getHeaders().forEach((k, v) -> System.out.println(k + ": " + v));
+
+            return response;
+        });
+    }
 
     @Override
     public void run(ApplicationArguments args) {
