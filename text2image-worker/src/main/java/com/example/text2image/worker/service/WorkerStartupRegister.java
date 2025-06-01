@@ -51,7 +51,7 @@ public class WorkerStartupRegister implements ApplicationRunner {
 
     public String getComfyUIPublicUrl() {
         String podId = System.getenv("RUNPOD_POD_ID");  // RunPod 提供的 POD 唯一 ID
-        String port = "8188"; // ComfyUI 暴露端口
+        String port = "8080";
         return "https://" + podId + "-" + port + ".proxy.runpod.net";
     }
 
