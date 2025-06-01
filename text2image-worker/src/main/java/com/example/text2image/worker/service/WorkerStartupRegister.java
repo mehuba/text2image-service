@@ -38,6 +38,7 @@ public class WorkerStartupRegister implements ApplicationRunner {
         WorkerInfo info = new WorkerInfo();
         info.setId(UUID.randomUUID().toString()); // 或从配置文件中读取固定ID
         info.setAddress(getWorkerPublicUrl()); // Worker 的访问地址
+        info.setAvailable(true);
         String masterRegisterUrl = System.getenv("MASTER_URL") + "/api/workers/register";
 
         HttpHeaders headers = new HttpHeaders();
