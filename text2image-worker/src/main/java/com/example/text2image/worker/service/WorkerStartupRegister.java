@@ -37,7 +37,7 @@ public class WorkerStartupRegister implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         WorkerInfo info = new WorkerInfo();
         info.setId(UUID.randomUUID().toString()); // 或从配置文件中读取固定ID
-        info.setAddress(getComfyUIPublicUrl()); // Worker 的访问地址
+        info.setAddress(getWorkerPublicUrl()); // Worker 的访问地址
         String masterRegisterUrl = System.getenv("MASTER_URL") + "/api/workers/register";
 
         HttpHeaders headers = new HttpHeaders();
@@ -49,7 +49,7 @@ public class WorkerStartupRegister implements ApplicationRunner {
         System.out.println("✅ Worker registered to master: " + masterRegisterUrl);
     }
 
-    public String getComfyUIPublicUrl() {
+    public String getWorkerPublicUrl() {
         String podId = System.getenv("RUNPOD_POD_ID");  // RunPod 提供的 POD 唯一 ID
         String port = "8080";
         return "https://" + podId + "-" + port + ".proxy.runpod.net";

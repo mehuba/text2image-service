@@ -96,7 +96,7 @@ public class ComfyUiService {
             // 4. 设置状态完成
             status.setStatus(TaskStatus.Status.SUCCESS);
             List<String> imageUrls = images.stream()
-                    .map(image -> comfyUiUrl + "/view" + "?filename=" + image.get("filename"))
+                    .map(image -> getComfyUIPublicUrl() + "/view" + "?filename=" + image.get("filename"))
                     .collect(Collectors.toList());
             status.setImageUrls(imageUrls);
 
@@ -127,5 +127,11 @@ public class ComfyUiService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to load and replace json", e);
         }
+    }
+
+    public String getComfyUIPublicUrl() {
+        String podId = System.getenv("RUNPOD_POD_ID");  // RunPod 提供的 POD 唯一 ID
+        String port = "8188";
+        return "https://" + podId + "-" + port + ".proxy.runpod.net";
     }
 }
