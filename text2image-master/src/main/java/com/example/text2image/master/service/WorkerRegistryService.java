@@ -2,6 +2,8 @@ package com.example.text2image.master.service;
 
 import com.example.text2image.common.dto.TaskRequest;
 import com.example.text2image.common.dto.WorkerInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class WorkerRegistryService {
+
+    private Logger logger = LoggerFactory.getLogger(WorkerRegistryService.class);
     private final Map<String, WorkerInfo> workers = new ConcurrentHashMap<>();
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -39,7 +43,7 @@ public class WorkerRegistryService {
 
             }
         }
-        System.out.println("Selected worker: " + selected);
+        logger.info("Selected worker: {}", selected);
         return selected; // 返回最优 worker URL
     }
 }

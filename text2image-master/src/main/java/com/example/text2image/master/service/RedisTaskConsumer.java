@@ -2,6 +2,8 @@ package com.example.text2image.master.service;
 
 import com.example.text2image.common.dto.TaskRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -11,6 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class RedisTaskConsumer {
+
+    private final Logger logger = LoggerFactory.getLogger(RedisTaskConsumer.class);
 
     @Autowired
     private MasterTaskDispatcher masterTaskDispatcher;
@@ -25,6 +29,7 @@ public class RedisTaskConsumer {
     @Scheduled(fixedRate = 1000)
     public void pollTasks() {
         String json = redisTemplate.opsForList().leftPop("text2img:tasks");
+        logger.info("left pop from text2img:tasks: {}", json);
         if (json != null) {
             try {
                 TaskRequest task = objectMapper.readValue(json, TaskRequest.class);

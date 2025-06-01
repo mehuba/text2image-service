@@ -87,7 +87,7 @@ public class ComfyUiService {
             while (historyResult == null || historyResult.isEmpty()) {
                 ResponseEntity<Map> historyResponse = restTemplate.getForEntity(comfyUiUrl + "/history/" + promptId, Map.class);
                 historyResult = historyResponse.getBody();
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             }
             Map<String, Object> map = (Map<String, Object>) historyResult.get(promptId);
             map = (Map<String, Object>) map.get("outputs");
