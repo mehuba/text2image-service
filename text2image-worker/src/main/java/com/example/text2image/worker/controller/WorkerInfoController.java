@@ -1,12 +1,14 @@
 package com.example.text2image.worker.controller;
 
+import com.example.text2image.common.dto.WorkerInfo;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.util.*;
 
 @RestController
-public class GpuController {
+public class WorkerInfoController {
 
     @GetMapping("/gpu-usage")
     public Map<String, Object> getGpuUsage() throws IOException {

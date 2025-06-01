@@ -7,5 +7,5 @@ import lombok.Data;
 public class TaskRequest {
 
     private String taskId;
-    private String prompt;
+    private Prompt prompt;
 }

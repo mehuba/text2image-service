@@ -2,6 +2,8 @@ package com.example.text2image.common.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class TaskStatus {
 
@@ -9,6 +11,6 @@ public class TaskStatus {
 
     private String taskId;
     private Status status;
-    private String imageUrl;
+    private List<String> imageUrls;
     private String errorMessage;
 }

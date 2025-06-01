@@ -5,7 +5,11 @@ logging:
   level:
     org.springframework.web.client: DEBUG
     org.apache.http: DEBUG
+
 management:
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:
@@ -15,5 +19,7 @@ comfy:
   ui:
     url: https://localhost:8188/api
 master:
+  register:
+    url: ${MASTER_URL}/api/workers/register
   callback:
-    url: http://38.150.67.180:8080/api/v1/tasks/callback
+    url: ${MASTER_URL}/api/v1/tasks/callback
